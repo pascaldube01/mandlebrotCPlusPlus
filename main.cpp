@@ -3,13 +3,14 @@
 #include "window.h"
 #include <complex>
 #include "quadratic.h"
+#include "mandlebrot_image.h"
 
 #define MAIN_WINDOW_TEST 0
 #define TEST_COMPLEX 0
 #define TEST_QUADRATIC 0
 
-#define WINDOW_W 800 
-#define WINDOW_H 600
+#define WINDOW_WIDTH 800 
+#define WINDOW_HEIGHT 600
 
 int main(){
 
@@ -57,11 +58,18 @@ int main(){
             test_point.display();
         }
 
+    //code without tests
     #else
         window main_window;
-        main_window.init(WINDOW_W,WINDOW_H);
-        
+        mandlebrot_image image;
+        main_window.init(WINDOW_WIDTH,WINDOW_HEIGHT);
+        image.pixel_data_create(WINDOW_WIDTH,WINDOW_HEIGHT);
+        image.set_image_limits(INITIAL_IMAGINARY_UPPER, INITIAL_IMAGINARY_LOWER, INITIAL_REAL_UPPER_LIMIT, INITIAL_REAL_LOWER_LIMIT);
+        image.pixel_data_destroy();
+        main_window.destroy();    
     #endif
+    
     SDL_Quit();
+    
     return 0;
 }

@@ -1,5 +1,13 @@
+#ifndef QUADRATIC_H
+#define QUADRATIC_H
+
 #include <complex>
 #include <iostream>
+
+#define ESCAPE_REAL_UPPPER_LIMIT 100
+#define ESCAPE_REAL_LOWER_LIMIT -100
+#define ESCAPE_IMAGINARY_UPPER 100
+#define ESCAPE_IMAGINARY_LOWER -100
 
 class mandlebrot_point{
 public:
@@ -12,8 +20,14 @@ public:
 
 
     void init(double real, double imaginary);
-    void square_add();
-    void display();
+    
+    void recurse_until_escape(); //square_add until an escape is reached (see #defines)
 
+
+    //for tests
+    void display();//used for testing
+    void square_add(); //perform zn+1=(zn^2)+z0 (used for testing, call recurse_until_escape)
 
 };
+
+#endif
