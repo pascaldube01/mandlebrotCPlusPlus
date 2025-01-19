@@ -44,7 +44,6 @@ int main(){
         complex_test.real(1.00);
         complex_test.imag(0.95);
         std::cout << complex_test << std::endl;
-        std::cout << "press enter to square" << std::endl;
         for(int i = 0; i < 10; i++){
             complex_test = complex_test * complex_test;
             std::cout << complex_test << std::endl;
@@ -57,14 +56,29 @@ int main(){
             test_point.square_add();
             test_point.display();
         }
+        test_point.init(-1.2, 0.2);
+        test_point.recurse_until_escape();
+        std::cout <<  "\n\ndid " << test_point.number_of_iterations << " iterations with non null\n\n" << std::endl;
+
+        test_point.init(0, 0);
+        test_point.recurse_until_escape();
+        std::cout <<  "\n\ndid " << test_point.number_of_iterations << " iterations with null\n\n" << std::endl;
 
     //code without tests
     #else
-        window main_window;
-        mandlebrot_image image;
+        //setting up main window
+        window main_window; 
         main_window.init(WINDOW_WIDTH,WINDOW_HEIGHT);
-        image.pixel_data_create(WINDOW_WIDTH,WINDOW_HEIGHT);
+
+        //prepping image for display
+        mandlebrot_image image;
+        image.pixel_data_create(WINDOW_HEIGHT, WINDOW_WIDTH);
         image.set_image_limits(INITIAL_IMAGINARY_UPPER, INITIAL_IMAGINARY_LOWER, INITIAL_REAL_UPPER_LIMIT, INITIAL_REAL_LOWER_LIMIT);
+
+        image.set_step_size();
+
+        image.fill_points_vector();
+
         image.pixel_data_destroy();
         main_window.destroy();    
     #endif

@@ -1,10 +1,13 @@
 #include "quadratic.h"
 #include <vector>
+#include <fstream>
 
 #define INITIAL_REAL_UPPER_LIMIT 1
 #define INITIAL_REAL_LOWER_LIMIT -2
 #define INITIAL_IMAGINARY_UPPER 1
 #define INITIAL_IMAGINARY_LOWER -1
+
+#define PPM_IMAGE_DEBUG_OUTPUT 1
 
 class mandlebrot_image{
     public:
@@ -15,7 +18,7 @@ class mandlebrot_image{
 
     //mandlebrot compute stuff
     //complex points to calculate untill escape
-    std::vector <mandlebrot_point> points_to_calculate;
+    std::vector <mandlebrot_point> calculated_points;
     double real_step_size;
     double imaginary_step_size;
 

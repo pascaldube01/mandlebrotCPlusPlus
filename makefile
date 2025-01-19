@@ -5,4 +5,4 @@ INCLUDES=header
 SRC=src
 
 all :
-	time $(cc) main.cpp $(SRC)/*.cpp -I $(INCLUDES) -o mandlebrot $(CFLAGS)
+	time $(cc) -O0 main.cpp $(SRC)/*.cpp -I $(INCLUDES) -o mandlebrot $(CFLAGS)
