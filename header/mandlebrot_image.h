@@ -1,3 +1,7 @@
+#ifndef MANDLEBROT_IMAGE_H
+#define MANDLEBROT_IMAGE_H
+
+
 #include "quadratic.h"
 #include <vector>
 #include <fstream>
@@ -45,3 +49,6 @@ class mandlebrot_image{
     void display_limit();
     void display_step_size();
 };
+
+
+#endif

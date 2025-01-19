@@ -47,7 +47,7 @@ void mandlebrot_image::fill_points_vector(){
     double cur_im = imaginary_lower_limit;
 
     //for every row of pixel
-    for(int im_px = 0; im_px < image_width; im_px++)
+    for(int im_px = 0; im_px < image_height; im_px++)
     {
         //updating number to compute
         cur_im += imaginary_step_size;
@@ -55,7 +55,7 @@ void mandlebrot_image::fill_points_vector(){
 
         //for every pixel in row
         double cur_rl = real_lower_limit;
-        for(int rl_px = 0; rl_px < image_height; rl_px++)
+        for(int rl_px = 0; rl_px < image_width; rl_px++)
         {
             cur_rl += real_step_size;
             //std::cout << "\t" << rl_px << std::endl;

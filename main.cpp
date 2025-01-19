@@ -9,8 +9,8 @@
 #define TEST_COMPLEX 0
 #define TEST_QUADRATIC 0
 
-#define WINDOW_WIDTH 800 
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1920 
+#define WINDOW_HEIGHT 1080
 
 int main(){
 

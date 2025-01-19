@@ -12,7 +12,7 @@
 #define ESCAPE_REAL_LOWER_LIMIT -100
 #define ESCAPE_IMAGINARY_UPPER 100
 #define ESCAPE_IMAGINARY_LOWER -100
-#define MAX_ITERATION 50
+#define MAX_ITERATION 125
 
 class mandlebrot_point{
 public:
