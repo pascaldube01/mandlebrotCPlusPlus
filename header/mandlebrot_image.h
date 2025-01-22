@@ -37,7 +37,8 @@ class mandlebrot_image{
     void set_image_limits(double im_hi, double im_lo, double rl_hi, double rl_lo);
     void set_step_size();
 
-    void fill_points_vector();
+
+    void calculate_points_single_thread();
 
 
     void pixel_data_destroy();

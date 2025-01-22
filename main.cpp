@@ -77,7 +77,7 @@ int main(){
 
         image.set_step_size();
 
-        image.fill_points_vector();
+        image.calculate_points_single_thread();
 
         image.pixel_data_destroy();
         main_window.destroy();    

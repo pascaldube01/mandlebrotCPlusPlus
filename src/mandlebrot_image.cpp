@@ -32,7 +32,7 @@ void mandlebrot_image::set_image_limits(double im_hi, double im_lo, double rl_hi
 }
 
 //calculate an image
-void mandlebrot_image::fill_points_vector(){
+void mandlebrot_image::calculate_points_single_thread(){
 
 
     #if(PPM_IMAGE_DEBUG_OUTPUT)
