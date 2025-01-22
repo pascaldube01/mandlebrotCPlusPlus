@@ -16,7 +16,7 @@
 class mandlebrot_image{
     public:
     //image stuff
-    char * pixel_data; //in BGRA format
+    unsigned char * pixel_data; //in BGRA format
     int image_height;
     int image_width;
 
@@ -40,6 +40,7 @@ class mandlebrot_image{
 
     void calculate_points_single_thread();
 
+    void render_greyscale();
 
     void pixel_data_destroy();
 

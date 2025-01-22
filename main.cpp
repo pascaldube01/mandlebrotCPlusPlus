@@ -4,13 +4,14 @@
 #include <complex>
 #include "quadratic.h"
 #include "mandlebrot_image.h"
+#include "unistd.h"
 
 #define MAIN_WINDOW_TEST 0
 #define TEST_COMPLEX 0
 #define TEST_QUADRATIC 0
 
-#define WINDOW_WIDTH 1920 
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
 
 int main(){
 
@@ -78,6 +79,13 @@ int main(){
         image.set_step_size();
 
         image.calculate_points_single_thread();
+
+        image.render_greyscale();
+
+        main_window.set_bg(image.pixel_data);
+        main_window.update_window();
+
+        sleep(1);
 
         image.pixel_data_destroy();
         main_window.destroy();    

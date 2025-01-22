@@ -3,7 +3,7 @@
 void mandlebrot_image::pixel_data_create(int required_height, int required_width){
     image_width = required_width;
     image_height = required_height;
-    pixel_data = new char[image_width * image_height *4];
+    pixel_data = new unsigned char[image_width * image_height *4];
 }
 
 
@@ -77,3 +77,14 @@ void mandlebrot_image::calculate_points_single_thread(){
     #endif
 }
 
+
+
+void mandlebrot_image::render_greyscale(){
+        for(int pos = 0; pos < image_height*image_width; pos++){
+            int current_position_pixel_data =pos*4;
+            pixel_data[current_position_pixel_data] = calculated_points[pos].number_of_iterations;
+            pixel_data[current_position_pixel_data+1] = calculated_points[pos].number_of_iterations;
+            pixel_data[current_position_pixel_data+2] = calculated_points[pos].number_of_iterations;
+            pixel_data[current_position_pixel_data+3] = 255;
+        }
+}
