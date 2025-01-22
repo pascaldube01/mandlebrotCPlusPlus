@@ -11,7 +11,8 @@
 #define INITIAL_IMAGINARY_UPPER 1
 #define INITIAL_IMAGINARY_LOWER -1
 
-#define PPM_IMAGE_DEBUG_OUTPUT 1
+#define PPM_IMAGE_DEBUG_OUTPUT 0
+#define EXPOSURE_SCALE_DEBUG_OUTPUT 1
 
 class mandlebrot_image{
     public:

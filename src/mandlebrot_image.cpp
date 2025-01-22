@@ -34,13 +34,15 @@ void mandlebrot_image::set_image_limits(double im_hi, double im_lo, double rl_hi
 //calculate an image
 void mandlebrot_image::calculate_points_single_thread(){
 
-
-    #if(PPM_IMAGE_DEBUG_OUTPUT)
-    #endif
-
     #if(PPM_IMAGE_DEBUG_OUTPUT)
     std::ofstream ppm_debug_image("image.ppm");
     ppm_debug_image << "P2\n" << image_width << " " << image_height << "\n" << MAX_ITERATION << "\n";
+    #endif
+
+
+    #if(EXPOSURE_SCALE_DEBUG_OUTPUT)
+    int intensity[MAX_ITERATION] = {0};
+    std::ofstream intensity_CSV_out("intensity.csv");
     #endif
 
     
@@ -67,13 +69,28 @@ void mandlebrot_image::calculate_points_single_thread(){
             new_point.recurse_until_escape();
             //add to vector 
             calculated_points.push_back(new_point);
+
+            #if(PPM_IMAGE_DEBUG_OUTPUT)
             ppm_debug_image << new_point.number_of_iterations << "\n";
+            #endif
+
+            #if(EXPOSURE_SCALE_DEBUG_OUTPUT)
+            intensity[new_point.number_of_iterations]++;
+            #endif
         }
     }
 
 
     #if(PPM_IMAGE_DEBUG_OUTPUT)
     ppm_debug_image.close();
+    #endif
+    #if(EXPOSURE_SCALE_DEBUG_OUTPUT)
+
+    for(int i = 0; i < MAX_ITERATION; i++)
+    intensity_CSV_out << intensity[i] << "\n";
+
+
+    intensity_CSV_out.close();
     #endif
 }
 
