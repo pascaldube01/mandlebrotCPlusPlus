@@ -23,7 +23,7 @@ void window::set_pixel(SDL_Surface *surface, int x, int y, Uint8 r, Uint8 g, Uin
 void window::init(int image_width, int image_height){
 
     //creating window
-    window = SDL_CreateWindow("SDL raytracing",
+    window = SDL_CreateWindow("Mandlebrot",
                                         SDL_WINDOWPOS_UNDEFINED,
                                         SDL_WINDOWPOS_UNDEFINED,
                                         image_width, image_height,
