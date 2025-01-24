@@ -5,6 +5,7 @@
 #include "quadratic.h"
 #include "mandlebrot_image.h"
 #include "unistd.h"
+#include "user_input.h"
 
 #define MAIN_WINDOW_TEST 0
 #define TEST_COMPLEX 0
@@ -77,15 +78,15 @@ int main(){
         image.set_image_limits(INITIAL_IMAGINARY_UPPER, INITIAL_IMAGINARY_LOWER, INITIAL_REAL_UPPER_LIMIT, INITIAL_REAL_LOWER_LIMIT);
 
         image.set_step_size();
-
         image.calculate_points_single_thread();
-
         image.render_greyscale();
 
         main_window.set_bg(image.pixel_data);
         main_window.update_window();
 
-        sleep(1);
+        while(handle_user_input()){
+
+        }
 
         image.pixel_data_destroy();
         main_window.destroy();    
@@ -95,3 +96,45 @@ int main(){
     
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+/*TODO*/
+
+/*
+zoom in/out
+    scroolwheel
+    square select
+    avoid recalculating everything every frame
+    reset zoom
+
+make ui
+    escape path
+        line only
+        line with data
+    show some data 
+        current/available compute mode
+        current color algo
+        current position
+
+
+resizeable window
+    maximise
+    border grab
+
+color
+    different coloring algos from wikipedia
+
+different compute mode
+    multithreading
+    GPU
+    long mode (custom unbound complex datatype)
+*/
