@@ -1,4 +1,4 @@
-cc=g++ -g -Wall -Wextra
+cc=g++ -g -std=c++20 -Wall -Wextra
 CFLAGS=$(shell pkg-config --cflags --libs sdl2)
 
 INCLUDES=header
