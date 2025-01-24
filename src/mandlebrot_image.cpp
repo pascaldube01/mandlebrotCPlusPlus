@@ -119,13 +119,16 @@ void mandlebrot_image::calculate_points_single_thread(){
 
 void mandlebrot_image::render_greyscale(){
 
-    double scaling_factor = UCHAR_MAX/(max_number_of_iterations - min_number_of_iterations);
+    int range = (max_number_of_iterations - min_number_of_iterations);
+    double scaling_factor = ((double) UCHAR_MAX )/ (double) range;
+
+    std::cout << range << " , " << scaling_factor <<  std::endl;
 
     for(int pos = 0; pos < image_height*image_width; pos++){
         
         int current_position_pixel_data =pos*4;
         unsigned char pixel_value = (calculated_points[pos].number_of_iterations - min_number_of_iterations) * scaling_factor;
-
+       
         pixel_data[current_position_pixel_data] = pixel_value;
         pixel_data[current_position_pixel_data+1] = pixel_value;
         pixel_data[current_position_pixel_data+2] = pixel_value;
