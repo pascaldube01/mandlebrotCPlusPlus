@@ -2,6 +2,7 @@
 
 
 void mandlebrot_point::init(double real, double imaginary){
+
     z0.real(real);
     z0.imag(imaginary);
     zn.real(real);

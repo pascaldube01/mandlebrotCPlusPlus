@@ -15,9 +15,11 @@ void mandlebrot_image::pixel_data_destroy(){
 
 
 void mandlebrot_image::set_step_size(){
+    /*calculating the full range of imaginary and real parts*/
     double im_range = imaginary_upper_limit - imaginary_lower_limit;
     double real_range = real_upper_limit - real_lower_limit;
 
+    /*calculating im and rl step per pixel based on window resolution*/
     real_step_size = real_range / image_width;
     imaginary_step_size = im_range / image_height;
 }
@@ -31,6 +33,12 @@ void mandlebrot_image::set_image_limits(double im_hi, double im_lo, double rl_hi
     imaginary_upper_limit = im_hi;
 }
 
+
+
+
+
+
+
 //calculate an image
 void mandlebrot_image::calculate_points_single_thread(){
 
@@ -41,9 +49,14 @@ void mandlebrot_image::calculate_points_single_thread(){
 
 
     #if(EXPOSURE_SCALE_DEBUG_OUTPUT)
-    int intensity[MAX_ITERATION] = {0};
+    int *intensity = new int[MAX_ITERATION+1];
     std::ofstream intensity_CSV_out("intensity.csv");
     #endif
+
+
+    /*resetting the min and max values that will be used in the  color/value scaling algorithm*/
+    min_number_of_iterations = INT_MAX;
+    max_number_of_iterations = 0;
 
     
     double cur_im = imaginary_lower_limit;
@@ -70,6 +83,13 @@ void mandlebrot_image::calculate_points_single_thread(){
             //add to vector 
             calculated_points.push_back(new_point);
 
+            /*checing if the limit has changed*/
+            if(new_point.number_of_iterations > max_number_of_iterations)
+                max_number_of_iterations = new_point.number_of_iterations;
+            else if(new_point.number_of_iterations < min_number_of_iterations)
+                min_number_of_iterations = new_point.number_of_iterations;
+
+            //these can be enabled in the .h
             #if(PPM_IMAGE_DEBUG_OUTPUT)
             ppm_debug_image << new_point.number_of_iterations << "\n";
             #endif
@@ -81,6 +101,8 @@ void mandlebrot_image::calculate_points_single_thread(){
     }
 
 
+    //std::cout << "from " << min_number_of_iterations << " to " << max_number_of_iterations <<std::endl;
+
     #if(PPM_IMAGE_DEBUG_OUTPUT)
     ppm_debug_image.close();
     #endif
@@ -88,8 +110,7 @@ void mandlebrot_image::calculate_points_single_thread(){
 
     for(int i = 0; i < MAX_ITERATION; i++)
     intensity_CSV_out << intensity[i] << "\n";
-
-
+    delete[] intensity;
     intensity_CSV_out.close();
     #endif
 }
@@ -97,11 +118,17 @@ void mandlebrot_image::calculate_points_single_thread(){
 
 
 void mandlebrot_image::render_greyscale(){
-        for(int pos = 0; pos < image_height*image_width; pos++){
-            int current_position_pixel_data =pos*4;
-            pixel_data[current_position_pixel_data] = calculated_points[pos].number_of_iterations;
-            pixel_data[current_position_pixel_data+1] = calculated_points[pos].number_of_iterations;
-            pixel_data[current_position_pixel_data+2] = calculated_points[pos].number_of_iterations;
-            pixel_data[current_position_pixel_data+3] = 255;
-        }
+
+    double scaling_factor = UCHAR_MAX/(max_number_of_iterations - min_number_of_iterations);
+
+    for(int pos = 0; pos < image_height*image_width; pos++){
+        
+        int current_position_pixel_data =pos*4;
+        unsigned char pixel_value = (calculated_points[pos].number_of_iterations - min_number_of_iterations) * scaling_factor;
+
+        pixel_data[current_position_pixel_data] = pixel_value;
+        pixel_data[current_position_pixel_data+1] = pixel_value;
+        pixel_data[current_position_pixel_data+2] = pixel_value;
+        pixel_data[current_position_pixel_data+3] = 255;
+    }
 }
