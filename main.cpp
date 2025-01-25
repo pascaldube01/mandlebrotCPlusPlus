@@ -28,12 +28,8 @@ int main(){
     #if(MAIN_WINDOW_TEST)
         window main_window;
         main_window.init(800,600);
-
-        std::cout << "should be blue-red gradiant" << std::endl;
-        main_window.test_set_pixel();
-        getc(stdin);
      
-        std::cout << "should be white screen" << std::endl;
+        std::cout << "should be blue to green vertical gradient" << std::endl;
         main_window.test_set_bg();
         getc(stdin);
      

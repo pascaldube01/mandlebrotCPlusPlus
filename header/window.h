@@ -9,6 +9,7 @@ class window{
     public:
         SDL_Window * window;
         SDL_Surface * bg_surface;
+        SDL_Renderer *window_renderer;
 
 
 
@@ -30,8 +31,6 @@ class window{
     
     //send new pixel data in BGRA format to background surface
     void set_bg(void* new_pixels);
-    //set a single pixel on a surface
-    void set_pixel(SDL_Surface *surface, int x, int y, Uint8 r, Uint8 g, Uint8 b);
 
     /*wrapper for SDL_UpdateWindowSurface*/
     void update_window();
@@ -39,9 +38,8 @@ class window{
 
     /*tests*/
 
-    /*displays a red to blue gradient*/
-    void test_set_pixel();
-    /*produces a white screen*/
+
+    /*produces a gradient on screen*/
     void test_set_bg();
 
 };
