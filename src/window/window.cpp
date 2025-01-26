@@ -67,6 +67,8 @@ void window::update_window(){
 
 void window::destroy(){
     SDL_DestroyWindow(window);
+    SDL_FreeSurface(bg_surface);
+    SDL_DestroyRenderer(window_renderer);
 }
 
 
