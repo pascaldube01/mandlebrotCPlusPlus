@@ -7,7 +7,6 @@
 #include <fstream>
 #include <limits.h>
 #include <format>
-#include <cmath>
 
 #define INITIAL_REAL_UPPER_LIMIT 1
 #define INITIAL_REAL_LOWER_LIMIT -2
@@ -42,7 +41,7 @@ class mandlebrot_image{
     int max_number_of_iterations;
 
     //memory allocation of pixel array replacing the one in the buffer, use set_bg() in wincou.cpp to blit to window surface
-    void pixel_data_create(int required_height, int required_width);
+    void pixel_data_set(int required_height, int required_width, void* new_pixel_data);
 
     //set the desired points limit for calculation (basicaly zoom level)
     void set_image_limits(double im_hi, double im_lo, double rl_hi, double rl_lo);

@@ -30,9 +30,14 @@ void window::init(int image_width, int image_height){
                 << "SDL_Error: " << SDL_GetError() << std::endl;
     }
 
+    //putting textures to NULL until used
+    bg_texture = NULL;
+
 
     /*getting window hardware accelerated renderer*/
     window_renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+
 
     /*putting black background*/
     SDL_RenderDrawRect(window_renderer, NULL);
@@ -42,19 +47,15 @@ void window::init(int image_width, int image_height){
 
 
 
-void window::set_bg(void* new_pixels){
+void window::set_bg(){
 
-    int surface_size = (bg_surface->w * bg_surface->h * bg_surface->format->BytesPerPixel);
+    /*to update the texture, we need to free it and create a new one since we can't access VRAM directly like we can a surface*/
+    if(bg_texture != NULL)
+        SDL_DestroyTexture(bg_texture);
 
-    SDL_LockSurface(bg_surface);
-    memcpy(bg_surface->pixels, new_pixels, surface_size);
-    SDL_UnlockSurface(bg_surface);
-
-    SDL_Texture *bg_texture = SDL_CreateTextureFromSurface(window_renderer, bg_surface);
+    bg_texture = SDL_CreateTextureFromSurface(window_renderer, bg_surface);
 
     SDL_RenderCopy(window_renderer, bg_texture, NULL, NULL);
-
-    SDL_DestroyTexture(bg_texture);
 }
 
 
@@ -68,6 +69,7 @@ void window::update_window(){
 void window::destroy(){
     SDL_DestroyWindow(window);
     SDL_FreeSurface(bg_surface);
+    SDL_DestroyTexture(bg_texture);
     SDL_DestroyRenderer(window_renderer);
 }
 
@@ -84,7 +86,7 @@ void window::destroy(){
 void window::test_set_bg(){
     int surface_size = (bg_surface->w * bg_surface->h * 4);
     
-    std::vector<char> new_pixels(surface_size, 255);
+    unsigned char *new_pixels = (unsigned char *) bg_surface->pixels;
 
     float gradient_increase_rate = ((float) 255 / (float) bg_surface->h);
     float current_gradient = 0;
@@ -104,7 +106,7 @@ void window::test_set_bg(){
     }
 
 
-    set_bg(new_pixels.data());
+    set_bg();
 
     update_window();
 }

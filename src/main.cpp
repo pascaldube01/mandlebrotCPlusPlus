@@ -11,8 +11,8 @@
 #define TEST_COMPLEX 0
 #define TEST_QUADRATIC 0
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1000
 
 int main(){
 
@@ -29,7 +29,7 @@ int main(){
         window main_window;
         main_window.init(800,600);
      
-        std::cout << "should be blue to green vertical gradient" << std::endl;
+        std::cout << "should be blue to red vertical gradient" << std::endl;
         main_window.test_set_bg();
         getc(stdin);
      
@@ -70,18 +70,25 @@ int main(){
 
         //prepping image for display
         mandlebrot_image image;
-        image.pixel_data_create(WINDOW_HEIGHT, WINDOW_WIDTH);
+        image.pixel_data_set(WINDOW_HEIGHT, WINDOW_WIDTH, main_window.bg_surface->pixels);
         image.set_image_limits(INITIAL_IMAGINARY_UPPER, INITIAL_IMAGINARY_LOWER, INITIAL_REAL_UPPER_LIMIT, INITIAL_REAL_LOWER_LIMIT);
 
         image.set_step_size();
         image.calculate_points_single_thread();
         image.render_greyscale();
 
-        main_window.set_bg(image.pixel_data);
+        main_window.set_bg();
         main_window.update_window();
 
-        while(handle_user_input()){
-
+        int operation_to_run = 0;
+        while((operation_to_run = handle_event())){
+            switch(operation_to_run){
+                case USR_REDRAW:
+                std::cout << "USR_REDRAW" << std::endl;
+                main_window.set_bg();
+                main_window.update_window();
+                break;
+            }
         }
 
         image.pixel_data_destroy();

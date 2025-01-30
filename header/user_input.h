@@ -4,8 +4,16 @@
 #include <SDL.h>
 #include <iostream>
 
+
+typedef enum {
+    USR_QUIT = 0,
+    USR_NO_EVENT = 1,
+    USR_REDRAW
+} user_triggered_ops;
+
+
 /*check for SDL_events triggered by the user*/
-bool handle_user_input();
+user_triggered_ops handle_event();
 
 
 #endif

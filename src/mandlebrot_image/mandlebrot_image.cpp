@@ -1,14 +1,16 @@
 #include "mandlebrot_image.h"
 
-void mandlebrot_image::pixel_data_create(int required_height, int required_width){
+
+/*pixel_Data must have been created by window::init*/
+void mandlebrot_image::pixel_data_set(int required_height, int required_width, void * new_pixel_data){
     image_width = required_width;
     image_height = required_height;
-    pixel_data = new unsigned char[image_width * image_height *4];
+    pixel_data = (unsigned char *)new_pixel_data;
 }
 
 
 void mandlebrot_image::pixel_data_destroy(){
-    delete[] pixel_data;
+    pixel_data = NULL; //not being freeed because the window created it, il will be freed by window::destroy
     image_width = 0;
     image_height = 0;
 }

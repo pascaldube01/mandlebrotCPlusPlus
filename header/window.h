@@ -8,8 +8,11 @@
 class window{
     public:
         SDL_Window * window;
-        SDL_Surface * bg_surface;
+
         SDL_Renderer *window_renderer;
+
+        SDL_Surface * bg_surface; //background (calculated pixels) surface 
+        SDL_Texture *bg_texture; //background GPU texture (created from bg_surface)
 
 
 
@@ -30,7 +33,7 @@ class window{
 
     
     //send new pixel data in BGRA format to background surface
-    void set_bg(void* new_pixels);
+    void set_bg();
 
     /*wrapper for SDL_UpdateWindowSurface*/
     void update_window();

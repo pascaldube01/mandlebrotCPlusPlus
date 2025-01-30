@@ -1,21 +1,35 @@
 #include "user_input.h"
 
-bool handle_user_input(){
+user_triggered_ops handle_event(){
     
     /*waiting for user input*/
-    SDL_Event user_event;
+    SDL_Event event;
 
     /*stuck here until user cause an event*/
-    SDL_WaitEventTimeout(&user_event, 1);
+    SDL_WaitEventTimeout(&event, 1);
 
-    switch(user_event.type){
+    switch(event.type){
         case SDL_QUIT:
-            return 0;
+            return  USR_QUIT;
+        case SDL_WINDOWEVENT:
+            if(event.window.event == SDL_WINDOWEVENT_SHOWN)
+                return USR_REDRAW;
             break;
+        default:
+            return USR_NO_EVENT;
     }
 
-    
-    
-
-    return 1;
+    return USR_NO_EVENT;
 }
+
+
+
+/*
+
+retval could be:
+redraw
+recolor
+quit
+recalculate full
+recalculate part
+*/
