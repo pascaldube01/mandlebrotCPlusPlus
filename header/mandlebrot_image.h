@@ -25,7 +25,7 @@ class mandlebrot_image{
 
     //mandlebrot compute stuff
     //complex points to calculate untill escape
-    std::vector <mandlebrot_point> calculated_points;
+    mandlebrot_point * calculated_points;
     double real_step_size;
     double imaginary_step_size;
 

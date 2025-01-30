@@ -8,7 +8,7 @@
 typedef enum {
     USR_QUIT = 0,
     USR_NO_EVENT = 1,
-    USR_REDRAW
+    USR_REDRAW = 2
 } user_triggered_ops;
 
 

@@ -25,5 +25,9 @@ $(SRC)/mandlebrot_image.o : $(SRC)/mandlebrot_image/mandlebrot_image.cpp $(INCLU
 $(SRC)/user_input.o : $(SRC)/user_input/user_input.cpp $(INCLUDES)/user_input.h
 	$(cc) -g -c $(OPTIM)  $(SRC)/user_input/user_input.cpp -I $(INCLUDES) -o $(SRC)/user_input.o $(CFLAGS)
 
+
+
+
+
 clean : 
 	rm $(SRC)/*.o

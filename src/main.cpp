@@ -68,7 +68,7 @@ int main(){
         window main_window; 
         main_window.init(WINDOW_WIDTH,WINDOW_HEIGHT);
 
-        //prepping image for display
+        //prepping image for initial display
         mandlebrot_image image;
         image.pixel_data_set(WINDOW_HEIGHT, WINDOW_WIDTH, main_window.bg_surface->pixels);
         image.set_image_limits(INITIAL_IMAGINARY_UPPER, INITIAL_IMAGINARY_LOWER, INITIAL_REAL_UPPER_LIMIT, INITIAL_REAL_LOWER_LIMIT);

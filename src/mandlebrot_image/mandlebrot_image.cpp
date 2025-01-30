@@ -6,10 +6,12 @@ void mandlebrot_image::pixel_data_set(int required_height, int required_width, v
     image_width = required_width;
     image_height = required_height;
     pixel_data = (unsigned char *)new_pixel_data;
+    calculated_points = new mandlebrot_point[image_width*image_height];
 }
 
 
 void mandlebrot_image::pixel_data_destroy(){
+    delete[] calculated_points;
     pixel_data = NULL; //not being freeed because the window created it, il will be freed by window::destroy
     image_width = 0;
     image_height = 0;
@@ -68,36 +70,34 @@ void mandlebrot_image::calculate_points_single_thread(){
     {
         //updating number to compute
         cur_im += imaginary_step_size;
-        //std::cout << im_px << std::endl;
 
         //for every pixel in row
         double cur_rl = real_lower_limit;
         for(int rl_px = 0; rl_px < image_width; rl_px++)
         {
             cur_rl += real_step_size;
-            //std::cout << "\t" << rl_px << std::endl;
-            //create new point
-            mandlebrot_point new_point;
-            //set up witn cur_rl ad cur_im
-            new_point.init(cur_rl, cur_im);
+
+            mandlebrot_point *new_point = &calculated_points[(im_px*image_width) + rl_px];
+            
+            //set up point witn cur_rl ad cur_im
+            new_point->init(cur_rl, cur_im);
             //quad recurse until escape
-            new_point.recurse_until_escape();
-            //add to vector 
-            calculated_points.push_back(new_point);
+            new_point->recurse_until_escape();
+
 
             /*checing if the limit has changed*/
-            if(new_point.number_of_iterations > max_number_of_iterations)
-                max_number_of_iterations = new_point.number_of_iterations;
-            else if(new_point.number_of_iterations < min_number_of_iterations)
-                min_number_of_iterations = new_point.number_of_iterations;
+            if(new_point->number_of_iterations > max_number_of_iterations)
+                max_number_of_iterations = new_point->number_of_iterations;
+            else if(new_point->number_of_iterations < min_number_of_iterations)
+                min_number_of_iterations = new_point->number_of_iterations;
 
             //these can be enabled in the .h
             #if(PPM_IMAGE_DEBUG_OUTPUT)
-            ppm_debug_image << new_point.number_of_iterations << "\n";
+            ppm_debug_image << new_point->number_of_iterations << "\n";
             #endif
 
             #if(EXPOSURE_SCALE_DEBUG_OUTPUT)
-            intensity[new_point.number_of_iterations]++;
+            intensity[new_point->number_of_iterations]++;
             #endif
         }
     }
