@@ -12,8 +12,8 @@
 #define TEST_COMPLEX 0
 #define TEST_QUADRATIC 0
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1000
+#define WINDOW_WIDTH 400
+#define WINDOW_HEIGHT 400
 
 int main(){
 
@@ -102,8 +102,9 @@ int main(){
                     break;
                 case USR_MWHEEL:
                     scrool_zoom(&image_limits, mouse_st);
-                    std::cout << "USR_MWHEEL : " << mouse_st.wheel_y << std::endl;
-                    std::cout << image_limits.im_hi << " : " << image_limits.im_low << std::endl;
+                    //std::cout << "USR_MWHEEL : " << mouse_st.wheel_y << std::endl;
+                    std::cout << "im " << image_limits.im_hi << " : " << image_limits.im_low << std::endl;
+                    std::cout << "rl " << image_limits.rl_hi << " : " << image_limits.rl_low << std::endl;
                     image.set_image_limits(image_limits);
                     image.set_step_size();
                     image.calculate_points_single_thread();
@@ -141,6 +142,7 @@ zoom in/out
     square select
     avoid recalculating everything every frame
     reset zoom
+    drag to pan
 
 make ui
     escape path

@@ -121,7 +121,7 @@ void mandlebrot_image::render_greyscale(){
     int range = (max_number_of_iterations - min_number_of_iterations);
     double scaling_factor = ((double) UCHAR_MAX )/ (double) range;
 
-    std::cout << range << " , " << scaling_factor <<  std::endl;
+    //std::cout << range << " , " << scaling_factor <<  std::endl;
 
     for(int pos = 0; pos < image_height*image_width; pos++){
         

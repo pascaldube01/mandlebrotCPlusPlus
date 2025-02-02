@@ -3,6 +3,7 @@
 
 #include "user_input.h"
 #include <iostream>
+#include <cmath>
 
 
 #define INITIAL_REAL_UPPER_LIMIT 1
