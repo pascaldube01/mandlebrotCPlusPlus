@@ -84,8 +84,8 @@ void window::destroy(){
 
 
 void window::test_set_bg(){
-    int surface_size = (bg_surface->w * bg_surface->h * 4);
     
+    /*typecasted pointer to main window bg_surface*/
     unsigned char *new_pixels = (unsigned char *) bg_surface->pixels;
 
     float gradient_increase_rate = ((float) 255 / (float) bg_surface->h);

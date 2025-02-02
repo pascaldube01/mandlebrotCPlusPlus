@@ -22,7 +22,7 @@ public:
 
     std::complex<double> z0; //initial complex
     std::complex<double> zn; // current complex
-    int number_of_iterations;// n 
+    unsigned short number_of_iterations;// n 
 
 
     void init(double real, double imaginary);

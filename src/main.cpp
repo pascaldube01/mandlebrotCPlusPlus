@@ -4,6 +4,7 @@
 #include <complex>
 #include "quadratic.h"
 #include "mandlebrot_image.h"
+#include "zoom.h"
 #include "unistd.h"
 #include "user_input.h"
 
@@ -68,26 +69,48 @@ int main(){
         window main_window; 
         main_window.init(WINDOW_WIDTH,WINDOW_HEIGHT);
 
+        //setting image render limit to initial position
+        zoom_level image_limits;
+        image_limits.im_hi = INITIAL_IMAGINARY_UPPER;
+        image_limits.im_low = INITIAL_IMAGINARY_LOWER;
+        image_limits.rl_hi = INITIAL_REAL_UPPER_LIMIT;
+        image_limits.rl_low = INITIAL_REAL_LOWER_LIMIT;
+        image_limits.window_height = WINDOW_HEIGHT;
+        image_limits.window_width = WINDOW_WIDTH;
+
         //prepping image for initial display
         mandlebrot_image image;
         image.pixel_data_set(WINDOW_HEIGHT, WINDOW_WIDTH, main_window.bg_surface->pixels);
-        image.set_image_limits(INITIAL_IMAGINARY_UPPER, INITIAL_IMAGINARY_LOWER, INITIAL_REAL_UPPER_LIMIT, INITIAL_REAL_LOWER_LIMIT);
 
+        image.set_image_limits(image_limits);
         image.set_step_size();
         image.calculate_points_single_thread();
         image.render_greyscale();
-
         main_window.set_bg();
         main_window.update_window();
 
         int operation_to_run = 0;
-        while((operation_to_run = handle_event())){
+        mouse_state mouse_st;
+
+        while((operation_to_run = handle_event(&mouse_st)))
+        {
             switch(operation_to_run){
                 case USR_REDRAW:
-                std::cout << "USR_REDRAW" << std::endl;
-                main_window.set_bg();
-                main_window.update_window();
-                break;
+                    std::cout << "USR_REDRAW" << std::endl;
+                    main_window.set_bg();
+                    main_window.update_window();
+                    break;
+                case USR_MWHEEL:
+                    scrool_zoom(&image_limits, mouse_st);
+                    std::cout << "USR_MWHEEL : " << mouse_st.wheel_y << std::endl;
+                    std::cout << image_limits.im_hi << " : " << image_limits.im_low << std::endl;
+                    image.set_image_limits(image_limits);
+                    image.set_step_size();
+                    image.calculate_points_single_thread();
+                    image.render_greyscale();
+                    main_window.set_bg();
+                    main_window.update_window();
+                    break;
             }
         }
 
@@ -129,7 +152,7 @@ make ui
         current position
 
 
-resizeable window
+resizeable window (change window size in window, mandlebrot and zoom)
     maximise
     border grab
 

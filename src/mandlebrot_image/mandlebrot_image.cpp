@@ -29,12 +29,12 @@ void mandlebrot_image::set_step_size(){
 }
 
 
-void mandlebrot_image::set_image_limits(double im_hi, double im_lo, double rl_hi, double rl_lo){
+void mandlebrot_image::set_image_limits(zoom_level image_limits){
 
-    real_lower_limit = rl_lo;
-    real_upper_limit = rl_hi;
-    imaginary_lower_limit = im_lo;
-    imaginary_upper_limit = im_hi;
+    real_lower_limit = image_limits.rl_low;
+    real_upper_limit = image_limits.rl_hi;
+    imaginary_lower_limit = image_limits.im_low;
+    imaginary_upper_limit = image_limits.im_hi;
 }
 
 
@@ -101,9 +101,6 @@ void mandlebrot_image::calculate_points_single_thread(){
             #endif
         }
     }
-
-
-    //std::cout << "from " << min_number_of_iterations << " to " << max_number_of_iterations <<std::endl;
 
     #if(PPM_IMAGE_DEBUG_OUTPUT)
     ppm_debug_image.close();

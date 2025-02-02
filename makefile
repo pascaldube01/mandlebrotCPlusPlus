@@ -7,6 +7,7 @@ SRC=src
 all : 	$(SRC)/window.o \
 		$(SRC)/quadratic.o \
 		$(SRC)/mandlebrot_image.o \
+		$(SRC)/zoom.o \
 		$(SRC)/user_input.o 
 	$(cc) -g $(OPTIM) $(SRC)/*.* -I $(INCLUDES) -o mandlebrot $(CFLAGS)
 
@@ -21,6 +22,9 @@ $(SRC)/quadratic.o : $(SRC)/quadratic/quadratic.cpp $(INCLUDES)/quadratic.h
 
 $(SRC)/mandlebrot_image.o : $(SRC)/mandlebrot_image/mandlebrot_image.cpp $(INCLUDES)/mandlebrot_image.h
 	$(cc) -g -c $(OPTIM)  $(SRC)/mandlebrot_image/mandlebrot_image.cpp -I $(INCLUDES) -o $(SRC)/mandlebrot_image.o $(CFLAGS)
+
+$(SRC)/zoom.o : $(SRC)/mandlebrot_image/zoom.cpp $(INCLUDES)/zoom.h
+	$(cc) -g -c $(OPTIM)  $(SRC)/mandlebrot_image/zoom.cpp -I $(INCLUDES) -o $(SRC)/zoom.o $(CFLAGS)
 
 $(SRC)/user_input.o : $(SRC)/user_input/user_input.cpp $(INCLUDES)/user_input.h
 	$(cc) -g -c $(OPTIM)  $(SRC)/user_input/user_input.cpp -I $(INCLUDES) -o $(SRC)/user_input.o $(CFLAGS)
